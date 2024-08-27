@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
+
+
+* > *{
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+} */
+
+.input-text{
+  @apply mt-1 block w-60 px-3 py-2 bg-white border border-slate-300 rounded-full 
+  text-sm shadow-sm placeholder-slate-500;
+  /* ring = ความหนาของเส้น */
+  @apply focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+}
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
