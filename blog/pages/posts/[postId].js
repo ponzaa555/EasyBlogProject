@@ -3,8 +3,30 @@ import Author from "@/components/_child/author"
 import Image from "next/image"
 import Releted from "@/components/_child/releted"
 import getPost  from "@/lib/helper"
+import Fetcher from "@/lib/fetcher"
+import Spinner from "@/components/_child/spinner"
+import Error from "@/components/_child/error"
+import { useRouter } from "next/router"
+import { SWRConfig } from "swr"
 
-export default function Page({title , img , subtitle , description , author}) {
+export default function Page(){
+
+    const router = useRouter()
+    const {postId} = router.query;
+
+    const {data , isLoading , isError} = Fetcher(`api/posts/${postId}`)
+
+    if(isLoading){
+        return(
+            <Spinner/>
+        )
+    }
+    if(isError) return <Error/>
+
+    return <Article {...data} />
+}
+
+function Article({title , img , subtitle , description , author}) {
     return (
         <Format>
             <section className=" container mx-auto md:px-2 py-16 w-1/2">
