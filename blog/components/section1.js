@@ -5,10 +5,16 @@ import Author from './_child/author.js'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperCore,{Autoplay}from 'swiper/core'
+import fetcher  from '@/lib/fetcher.js';
+import Spinner from './_child/spinner.js';
+import Error from 'next/error.js';
 
 SwiperCore.use([Autoplay]);
 const Section1 = () => {
-
+    const {data,isLoading,isError} = fetcher('api/trending')
+    // console.log(data);
+    if(isLoading) return <Spinner/>
+    if(isError) return <Error/>
     const bg = {
         background: "url('/images/banner.png') no-repeat",
         backgroundPosition : "right"
@@ -25,9 +31,11 @@ const Section1 = () => {
                         disableOnInteraction: false
                     }}
                 >
-                    <SwiperSlide>{Slide()}</SwiperSlide>
-                    <SwiperSlide>{Slide()}</SwiperSlide>
-                    <SwiperSlide>{Slide()}</SwiperSlide>
+                    {
+                        data.map((value,index) => (
+                            <SwiperSlide key={index}><Slide data={value}></Slide></SwiperSlide>
+                        ))
+                    }
                 </Swiper>
             </div>
         </section>
@@ -36,25 +44,25 @@ const Section1 = () => {
 
 export default Section1;
 
-function Slide() {
+function Slide({data}) {
+    const {id,title,description,category,img,published,author,subtitle} = data
     return (
         <div className=' grid md:grid-cols-2 gap-x-10'>
             <div className='image'>
-                <Link href={"/"} className=' cursor-pointer'><Image src={"/images/img1.jpg"} width={600} height={600} /></Link>
+                <Link href={"/"} className=' cursor-pointer'><Image src={img || "/"} width={600} height={600} /></Link>
             </div>
             <div className='info  flex justify-center flex-col'>
                 <div className='cat'>
-                    <Link href={"/"} className=' cursor-pointer text-orange-600 hover:text-orange-800'>Business,Travel</Link>
-                    <Link href={"/"} className=' cursor-pointer text-gray-800 hover:text-gray-600'>-July3,2022</Link>
+                    <Link href={"/"} className=' cursor-pointer text-orange-600 hover:text-orange-800'>{category || "Unknown"}</Link>
+                    <Link href={"/"} className=' cursor-pointer text-gray-800 hover:text-gray-600'>-{published || "Unknown"}</Link>
                 </div>
                 <div className='Title'>
-                    <Link href={"/"} className=' text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600'> You most unhappy customers are your grestest source of learning </Link>
+                    <Link href={"/"} className=' text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
                 </div>
                     <p className=' text-gray-500 py-3'>
-                        Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind
-                        text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+                        {description}
                     </p>
-                    <Author />
+                    {author ? <Author/> : <></>}
             </div> 
         </div>
     )

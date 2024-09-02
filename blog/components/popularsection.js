@@ -3,19 +3,28 @@ import { Swiper,SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Author from './_child/author';
+import fetcher from '@/lib/fetcher';
+import Spinner from './_child/spinner';
+import Error  from 'next/error';
 
 const Popularsection = () => {
+    const {data,isLoading,isError} = fetcher('api/popular')
+    // console.log(data);
+    if(isLoading) return <Spinner/>
+    if(isError) return <Error/>
     return (
         <section className=' container mx-auto md:px-20 py-16'>
             <h1 className=' font-bold text-4xl py-12 text-center'>Most Popular</h1>
 
             {/* Swiper */}
-            <Swiper 
+            <Swiper  
             slidesPerView={2}>
-                <SwiperSlide>{PopularBlog()}</SwiperSlide>
-                <SwiperSlide>{PopularBlog()}</SwiperSlide>
-                <SwiperSlide>{PopularBlog()}</SwiperSlide>
-                <SwiperSlide>{PopularBlog()}</SwiperSlide>
+                {
+                    data.map((value,index) => (
+                        // ชื้อ data ต้องตรงกับ function PopularBlog({data}) ไม่ตรงหาไม่เจอ
+                        <SwiperSlide key={index}><PopularBlog data ={value}></PopularBlog></SwiperSlide>
+                    ))
+                }
             </Swiper>
         </section>
     );
@@ -23,25 +32,25 @@ const Popularsection = () => {
 
 export default Popularsection;
 
-function PopularBlog(){
+function PopularBlog({data}){
+    const {title,description,category,img,published,author,subtitle} = data
     return (
         <div className=' grid mx-4'>
             <div className='images'>
-                <Link href={"/"}><Image src={"/images/img1.jpg"} width={600} height={400} /></Link>
+                <Link href={"/"}><Image src={img || "/"} width={600} height={400} /></Link>
             </div>
             <div className='info flex justify-center flex-col py-4'>
                 <div className='cat'>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>Business,Travel</Link>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-July3,2022</Link>
+                    <Link href={"/"} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>{category}</Link>
+                    <Link href={"/"} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-{published}</Link>
                 </div>
                 <div className='title'>
-                    <Link href={"/"} className=' text-3xl md:text-4xl  font-bold text-gray-800 hover:text-gray-600'> You most unhappy customers are your grestest source of learning </Link>
+                    <Link href={"/"} className=' text-3xl md:text-4xl  font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
                 </div>
                 <p className=' text-gray-500 py-3 text-sm'>
-                        Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind
-                        text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+                        {description}
                 </p>
-                <Author/>
+                {author ? <Author/> : <></>}
             </div>
         </div>
     )
