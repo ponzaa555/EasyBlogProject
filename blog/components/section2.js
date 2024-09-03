@@ -37,18 +37,18 @@ function Blog({data}) {
     return (
         <div className=' item '>
             <div className='images'>
-                <Link href={"/"}><Image src={img || "/"} width={500} height={350} className=' rounded' /></Link>
+                <Link href={`/posts/${id}`}><Image src={img || "/"} width={500} height={350} className=' rounded' /></Link>
             </div>
             <div className='info flex justify-center flex-col py-4'>
                 <div className='cat'>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>{category || "Unknown"}</Link>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-{published || "Unknown"}</Link>
+                    <Link href={`/posts/${id}`} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>{category || "Unknown"}</Link>
+                    <Link href={`/posts/${id}`} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-{published || "Unknown"}</Link>
                 </div>
                 <div className='title'>
-                    <Link href={"/"} className=' text-xl font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
+                    <Link href={`/posts/${id}`} className=' text-xl font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
                 </div>
                 <p className=' text-gray-500 py-3 text-sm'>{subtitle}</p>
-                {author ? <Author/> : <></>}
+                {author ? <Author {...author}/> : <></>}
             </div>
         </div>
     )

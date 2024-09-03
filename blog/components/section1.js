@@ -49,20 +49,20 @@ function Slide({data}) {
     return (
         <div className=' grid md:grid-cols-2 gap-x-10'>
             <div className='image'>
-                <Link href={"/"} className=' cursor-pointer'><Image src={img || "/"} width={600} height={600} /></Link>
+                <Link href={`/posts/${id}`} className=' cursor-pointer'><Image src={img || "/"} width={600} height={600} /></Link>
             </div>
             <div className='info  flex justify-center flex-col'>
                 <div className='cat'>
-                    <Link href={"/"} className=' cursor-pointer text-orange-600 hover:text-orange-800'>{category || "Unknown"}</Link>
-                    <Link href={"/"} className=' cursor-pointer text-gray-800 hover:text-gray-600'>-{published || "Unknown"}</Link>
+                    <Link href={"/posts/${id}"} className=' cursor-pointer text-orange-600 hover:text-orange-800'>{category || "Unknown"}</Link>
+                    <Link href={"/posts/${id}"} className=' cursor-pointer text-gray-800 hover:text-gray-600'>-{published || "Unknown"}</Link>
                 </div>
                 <div className='Title'>
-                    <Link href={"/"} className=' text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
+                    <Link href={"/posts/${id}"} className=' text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
                 </div>
                     <p className=' text-gray-500 py-3'>
                         {description}
                     </p>
-                    {author ? <Author/> : <></>}
+                    {author ? <Author {...author}/> : <></>}
             </div> 
         </div>
     )
