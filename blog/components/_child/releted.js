@@ -14,15 +14,17 @@ export default function releted() {
 
             <div className=" flex flex-col gap-6">
                 {/* each releted post */}
-                {data.map((value ,index) =>{
-                    <Post key={index} {...value}></Post>
-                })}
+                {data.map((value ,index) =>
+                    <Post key={index} {...value}/>
+
+                )}
             </div>
         </section>
     )
 }
 
 function Post({id,title,catagory,img, published,author}) {
+    console.log(title);
     return (
         <div className=" flex gap-5">
             {/* Img */}

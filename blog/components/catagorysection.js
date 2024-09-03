@@ -46,15 +46,15 @@ function Post({data}) {
         
         <div className=' flex gap-5'>
             <div className='images flex flex-col justify-start'>
-                <Link href={"/"}><Image src={img || "/"} width={300} height={250} className="rounded " /></Link>
+                <Link href={`/posts/${id}`}><Image src={img || "/"} width={300} height={250} className="rounded " /></Link>
             </div>
             <div className='info flex justify-center flex-col'>
                 <div className='cat'>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>{category}</Link>
-                    <Link href={"/"} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-{published}</Link>
+                    <Link href={"`/posts/${id}`"} className=' text-sm cursor-pointer text-orange-600 hover:text-orange-800'>{category}</Link>
+                    <Link href={"`/posts/${id}`"} className=' text-sm cursor-pointer text-gray-800 hover:text-gray-600'>-{published}</Link>
                 </div>
                 <div className='title'>
-                    <Link href={"/"} className=' text-xl  font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
+                    <Link href={"`/posts/${id}`"} className=' text-xl  font-bold text-gray-800 hover:text-gray-600'>{title}</Link>
                 </div>
                 {author ? <Author {...author}/> : <></>}
             </div>
